@@ -1,0 +1,57 @@
+
+using Microsoft.EntityFrameworkCore;
+using Data;
+using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using System.Text.RegularExpressions;
+
+Console.WriteLine("BlogSystem Console Demo gestartet.");
+
+int sqlCount = 0;
+var options = new DbContextOptionsBuilder<AppDbContext>()
+    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb;Trusted_Connection=True;")
+    //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
+    .LogTo(log =>
+    {
+        Console.WriteLine(log);
+        if (Regex.IsMatch(log, @"Executed DbCommand"))
+        {
+            sqlCount++;
+        }
+    }, LogLevel.Information)
+    .EnableSensitiveDataLogging()
+    .EnableDetailedErrors()
+    .Options
+    ;
+using var db = new AppDbContext(options);
+db.Database.EnsureCreated();
+
+
+// Seed initial ausführen, falls leer
+// DbSeeder.Seed(db);
+
+// Endlosschleife zum Testen
+while (true)
+{
+    Console.Clear();
+    Console.WriteLine("Testlauf gestartet...");
+    sqlCount = 0;
+
+    var stopwatch = Stopwatch.StartNew();
+
+    var blogs = db.Blogs
+        .ToList();
+
+    stopwatch.Stop();
+
+    foreach (var blog in blogs)
+    {
+        Console.WriteLine($"> {blog.Name} ({blog.Posts.Count} Posts)");
+    }
+
+    Console.WriteLine();
+    Console.WriteLine($"Dauer: {stopwatch.ElapsedMilliseconds} ms");
+    Console.WriteLine($"Anzahl SQL-Kommandos: {sqlCount}");
+    Console.WriteLine("Drücke Enter für den nächsten Lauf...");
+    Console.ReadLine();
+}
