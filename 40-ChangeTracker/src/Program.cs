@@ -9,8 +9,8 @@ using System.Text.RegularExpressions;
 #region dbsetup
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
-    .UseSqlite($"Data Source=blogsystemdb20.db")
-    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb20;Trusted_Connection=True;")
+    .UseSqlite($"Data Source=blogsystemdb40.db")
+    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb40;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
     {
@@ -25,32 +25,48 @@ var options = new DbContextOptionsBuilder<AppDbContext>()
     .Options
     ;
 using var db = new AppDbContext(options);
-db.Database.EnsureDeleted();
+//db.Database.EnsureDeleted();
 db.Database.EnsureCreated();
 
 
 // Seed initial ausführen, falls leer
-DbSeeder.Seed(db);
+//DbSeeder.Seed(db);
 #endregion
 
 Console.WriteLine("BlogSystem Console Demo gestartet.");
 // Endlosschleife zum Testen
 while (true)
 {
-    Console.Clear();
     Console.WriteLine("Testlauf gestartet...");
     sqlCount = 0;
 
     var stopwatch = Stopwatch.StartNew();
-
+    
      var blogs = db.Blogs
-        .Include(b => b.Posts)
-            .ThenInclude(p => p.Category)
-        .Include(b => b.Posts)
-            .ThenInclude(p => p.Comments)
-        //.AsSplitQuery()
+        //.Include(b => b.Posts)
+            //.ThenInclude(p => p.Category)
+        //.Include(b => b.Posts)
+            //.ThenInclude(p => p.Comments)
+        //.AsNoTracking()
         .ToList();
+    
 
+    /*
+         var blogs = db.Blogs
+         .Select(b => new
+         {
+             b.Id,
+             b.Name,
+             Posts = b.Posts.Select(p => new
+             {
+                 p.Id,
+                 p.Title,
+                 Category = p.Category.Name,
+                 Comments = p.Comments.Select(c => new { c.Id, c.Content })
+             }).ToList()
+         })
+        .ToList();
+    */
     stopwatch.Stop();
 
 #region output
