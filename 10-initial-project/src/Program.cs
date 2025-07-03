@@ -56,7 +56,7 @@ while (true)
 
 #region output
     Console.WriteLine();
-    Console.WriteLine($"Dauer: {stopwatch.ElapsedMilliseconds} ms");
+    Console.WriteLine($"Dauer: {stopwatch.Elapsed}");
     Console.WriteLine($"Anzahl SQL-Kommandos: {sqlCount}");
     Console.WriteLine("Drücke Enter für den nächsten Lauf...");
     Console.ReadLine();
