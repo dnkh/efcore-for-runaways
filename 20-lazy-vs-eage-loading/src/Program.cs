@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 #region dbsetup
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
-    .UseSqlite($"Data Source=blogsystemdb20.sql")
+    .UseSqlite($"Data Source=blogsystemdb20.db")
     //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb20;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>

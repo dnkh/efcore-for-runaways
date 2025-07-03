@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 #region dbsetup
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
-    .UseSqlite($"Data Source=blogsystemdb15.sql")
+    .UseSqlite($"Data Source=blogsystemdb15.db")
     //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb10;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
