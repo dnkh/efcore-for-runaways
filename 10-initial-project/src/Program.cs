@@ -10,7 +10,8 @@ using System.Text.RegularExpressions;
 #region dbsetup
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
-    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb;Trusted_Connection=True;")
+    .UseSqlite($"Data Source=blogsystemdb.sql")
+    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
     {
@@ -29,7 +30,7 @@ db.Database.EnsureCreated();
 
 
 // Seed initial ausführen, falls leer
-// DbSeeder.Seed(db);
+//DbSeeder.Seed(db);
 
 #endregion
 
