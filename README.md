@@ -4,4 +4,7 @@ This repository contains a collection of demos demonstrating Entity Framework Co
 
 Each demo resides in its own folder at the repository root and is numbered in increments of 10. The first demo, `10-initial-project`, provides the baseline application on which later demos build.
 
-Upcoming demos will focus on performance tips and tricks for EF Core and showcase additional features.
+It is possible to run the demos in a github codespace
+You need to install the "ef core tools" and the VsCode Extension "SQLite Viewer
+
+If there is time left I will add a ".DevContainer" file for the initial setup
