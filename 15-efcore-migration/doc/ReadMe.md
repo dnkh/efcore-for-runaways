@@ -10,13 +10,13 @@ dotnet tool install --global dotnet-ef
 ## Codechanges
 BlogSystem.csproj
 
-´´´
+```csharp
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" />
-´´´
+```
 
 Data/AppDbContextFactory
 
-´´´
+```csharp
 public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
@@ -27,6 +27,6 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         return new AppDbContext(optionsBuilder.Options);
     }
 }
-´´´
+```
 
 ## EFBunde
