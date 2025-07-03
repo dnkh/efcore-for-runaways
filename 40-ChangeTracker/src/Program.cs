@@ -48,6 +48,7 @@ while (true)
             .ThenInclude(p => p.Category)
         .Include(b => b.Posts)
             .ThenInclude(p => p.Comments)
+        //.AsSplitQuery()
         .ToList();
 
     stopwatch.Stop();
