@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
     .UseSqlite($"Data Source=blogsystemdb15.sql")
-    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb10;Trusted_Connection=True;")
+    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb15;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
     {
@@ -26,7 +26,7 @@ var options = new DbContextOptionsBuilder<AppDbContext>()
     .Options
     ;
 using var db = new AppDbContext(options);
-// db.Database.EnsureCreated();
+db.Database.EnsureCreated();
 
 
 // Seed initial ausführen, falls leer
