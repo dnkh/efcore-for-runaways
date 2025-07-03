@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 using Data;
 using System.Diagnostics;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 using System.Text.RegularExpressions;
 #endregion
@@ -12,7 +11,7 @@ using System.Text.RegularExpressions;
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
     .UseSqlite($"Data Source=blogsystemdb15.sql")
-    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb10;Trusted_Connection=True;")
+    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb15;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
     {
@@ -27,7 +26,7 @@ var options = new DbContextOptionsBuilder<AppDbContext>()
     .Options
     ;
 using var db = new AppDbContext(options);
-// db.Database.EnsureCreated();
+db.Database.EnsureCreated();
 
 
 // Seed initial ausführen, falls leer
@@ -36,7 +35,6 @@ using var db = new AppDbContext(options);
 #endregion
 
 Console.WriteLine("BlogSystem Console Demo gestartet.");
-
 
 // Endlosschleife zum Testen
 while (true)
@@ -48,24 +46,13 @@ while (true)
     var stopwatch = Stopwatch.StartNew();
 
     var blogs = db.Blogs
-        .Include(b => b.Posts)
-        .ThenInclude(p => p.Comments)
         .ToList();
 
     stopwatch.Stop();
 
     foreach (var blog in blogs)
     {
-        Console.WriteLine($"> {blog.Name}");
-        foreach (var post in blog.Posts)
-        {
-            Console.WriteLine($"{post.Title}");
-            foreach (var comment in post.Comments)
-            {
-                Console.WriteLine($"Author: {comment.Author}, Content: {comment.Content}, CreatedAt: {comment.CreatedAt}");
-            }
-        }
-
+        Console.WriteLine($"> {blog.Name} ({blog.Posts.Count} Posts)");
     }
 
 #region output
