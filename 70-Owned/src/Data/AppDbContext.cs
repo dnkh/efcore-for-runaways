@@ -20,13 +20,6 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // modelBuilder.Entity<Blog>()
-        //     .Property(b => b.Url)
-        //     .HasConversion(
-        //         v => v.Value,
-        //         v => new Url(v)
-        //     );
-
         modelBuilder.Entity<Blog>()
             .Property(b => b.Name)
             .HasMaxLength(200)
@@ -36,6 +29,16 @@ public class AppDbContext : DbContext
             .Property(p => p.Title)
             .HasMaxLength(300)
             .IsRequired();
+
+        // modelBuilder.Entity<Post>()
+        //     .OwnsOne(p => p.MetaData, meta =>
+        //     {
+        //         meta.Property(m => m.CreatedAt).HasColumnName("CreatedAt");
+        //         meta.Property(m => m.ChangedAt).HasColumnName("ChangedAt");
+        //         meta.Property(m => m.CreatedBy).HasColumnName("CreatedBy");
+        //         meta.Property(m => m.ChangedBy).HasColumnName("ChangedBy");
+        //     });
+
 
         modelBuilder.Entity<Category>()
             .Property(c => c.Name)

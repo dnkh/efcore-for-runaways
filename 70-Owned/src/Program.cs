@@ -45,10 +45,6 @@ while (true)
         .ToList();
 
     Console.WriteLine($"Es sind {blogs.Count} verfügbar");
-    foreach (var blog in blogs)
-    {
-        Console.WriteLine($"Blog: {blog.Name}, Url: {blog.Url}");
-    }
     stopwatch.Stop();
 
 #region output

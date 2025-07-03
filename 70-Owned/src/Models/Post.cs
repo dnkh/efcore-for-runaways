@@ -6,6 +6,8 @@ public class Post
 
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
+
+    // public PostMetaData MetaData { get; set; } = PostMetaData.Default;
     public DateTime PublishedAt { get; set; }
 
     public int BlogId { get; set; }
