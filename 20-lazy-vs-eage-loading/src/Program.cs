@@ -1,12 +1,12 @@
-
+#region usings
 using Microsoft.EntityFrameworkCore;
 using Data;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using System.Text.RegularExpressions;
+#endregion
 
-Console.WriteLine("BlogSystem Console Demo gestartet.");
-
+#region dbsetup
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
     .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb;Trusted_Connection=True;")
@@ -29,7 +29,9 @@ db.Database.EnsureCreated();
 
 // Seed initial ausführen, falls leer
 // DbSeeder.Seed(db);
+#endregion
 
+Console.WriteLine("BlogSystem Console Demo gestartet.");
 // Endlosschleife zum Testen
 while (true)
 {
@@ -49,9 +51,11 @@ while (true)
         Console.WriteLine($"> {blog.Name} ({blog.Posts.Count} Posts)");
     }
 
+#region output
     Console.WriteLine();
     Console.WriteLine($"Dauer: {stopwatch.ElapsedMilliseconds} ms");
     Console.WriteLine($"Anzahl SQL-Kommandos: {sqlCount}");
     Console.WriteLine("Drücke Enter für den nächsten Lauf...");
     Console.ReadLine();
+#endregion
 }
