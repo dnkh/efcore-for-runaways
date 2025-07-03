@@ -2,11 +2,40 @@
 ## Definition:
 Lazy Loading bedeutet, dass Navigations-Properties erst beim Zugriff aus der Datenbank geladen werden – nicht sofort beim Query.
 
-Erfordert Konfiguration (UseLazyLoadingProxies + virtual + Proxy-Paket)
+**Vorteile:**
+
+- Einfach bei einzelnen Zugriffen
+
+- Spart Datenbank-Last, wenn Navigation nicht immer gebraucht wird
+
+**Nachteile:**
+
+- Gefahr der N+1-Falle bei Listen
+
+- Schwer zu debuggen
+
+- Erfordert Konfiguration (UseLazyLoadingProxies + virtual + Proxy-Paket)
+
 
 # Eager Loading
 ## Definition:
 Eager Loading bedeutet, dass alle benötigten Daten per .Include() direkt in der ersten Query geladen werden.
+
+**Vorteile:**
+
+- Performance-kontrolliert
+
+- Kein N+1
+
+- Klare SQL-Struktur
+
+- Logging-freundlich
+
+**Nachteile:**
+
+- Man lädt evtl. unnötig viele Daten
+
+- Komplexe Includes können ineffizient werden 
 
 **Eager Loading ist der Standard in EF Core 8**
 
