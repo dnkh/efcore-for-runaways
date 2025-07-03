@@ -8,13 +8,13 @@ dotnet tool install --global dotnet-ef
 
 
 ## Codechanges
-BlogSystem.csproj
+### BlogSystem.csproj
 
 ```csharp
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" />
 ```
 
-Data/AppDbContextFactory
+### Data/AppDbContextFactory
 
 ```csharp
 public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
