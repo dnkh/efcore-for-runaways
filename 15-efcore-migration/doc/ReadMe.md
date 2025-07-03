@@ -52,3 +52,16 @@ dotnet ef migrations bundle --self-contained -r win-x64
 Verfügbare Runtime Ids finden sich unter 
 ([https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#known-rids](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#known-rids))
 
+
+## Dockerfile
+Das ist ein Beispiel Dockerfile ( ungetested) um ein efbundle in docker auszuführen
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-alpine
+
+WORKDIR /app
+
+COPY ../efbundle.exe .
+
+ENTRYPOINT ["./efbundle.exe"]
+```
