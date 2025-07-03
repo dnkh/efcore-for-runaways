@@ -30,7 +30,7 @@ db.Database.EnsureCreated();
 
 
 // Seed initial ausführen, falls leer
-//DbSeeder.Seed(db);
+DbSeeder.Seed(db);
 
 #endregion
 

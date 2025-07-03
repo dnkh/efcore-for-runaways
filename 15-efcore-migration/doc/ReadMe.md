@@ -29,10 +29,26 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 }
 ```
 
+## Migrations
+
+```pwsh
+dotnet ef migrations add "Initial Migrationsm"    
+
+dotnet ef database update
+````
+
+
+
+
 ## EFBunde
 Um ein Bundle zu erstellen welches komplett "self contained" ist und auch in einem Docker Container ausgeführt werden kann. Muss man folgenden Befehl ausführen
 
 ```pwsh
 dotnet ef migrations bundle --self-contained -r linux-x64
+
+dotnet ef migrations bundle --self-contained -r win-x64
 ```
+
+Verfügbare Runtime Ids finden sich unter 
+([https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#known-rids](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#known-rids))
 
