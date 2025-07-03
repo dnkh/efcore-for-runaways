@@ -2,7 +2,7 @@
 This is the initial version of the project which is the base for the upcoming demos
 
 ## Commands
-```csharp
+```pwsh
 dotnet tool install --global dotnet-ef
 ```
 
@@ -30,9 +30,9 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 ```
 
 ## EFBunde
-Um ein Bundle zu erstellen welches komplett Selfhosted ist und auch in einem Docker Container ausgeführt werden kann. Muss man folgenden Befehl ausführen
+Um ein Bundle zu erstellen welches komplett "self contained" ist und auch in einem Docker Container ausgeführt werden kann. Muss man folgenden Befehl ausführen
 
-```csharp
+```pwsh
 dotnet ef migrations bundle --self-contained -r linux-x64
 ```
 
