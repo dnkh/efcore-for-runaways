@@ -65,3 +65,28 @@ COPY ../efbundle.exe .
 
 ENTRYPOINT ["./efbundle.exe"]
 ```
+
+
+## Weitere Migration einfügen
+
+In der Blog Entity fügen wir das Property "Description" hinzu
+
+```csharp
+public string Description { get; set; } = string.Empty;
+```
+
+```pwsh
+dotnet ef migrations add "Add Description"
+```
+
+Generierte Migration anpassen und folgende Zeile hinzufügen
+
+```csharp
+migrationBuilder.Sql("UPDATE Blogs SET Description = 'No description provided.'");
+```
+Jetzt die Datenbank aktualisieren mit
+
+```pwsh
+dotnet ef database update
+```
+
