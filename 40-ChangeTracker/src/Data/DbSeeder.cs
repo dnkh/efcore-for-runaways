@@ -20,7 +20,7 @@ public static class DbSeeder
 
         var blogs = new List<Blog>();
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= 1000; i++)
         {
             var blog = new Blog
             {
