@@ -9,9 +9,8 @@ using System.Text.RegularExpressions;
 #region dbsetup
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
-    .UseSqlite($"Data Source=blogsystemdb55.db")
-    //.AddInterceptors(new SetCreatedByInterceptor())
-    //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb55;Trusted_Connection=True;")
+    //.UseSqlite($"Data Source=blogsystemdb80.db")
+    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb80;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
     {
@@ -42,27 +41,22 @@ while (true)
     sqlCount = 0;
 
     var stopwatch = Stopwatch.StartNew();
-    var blogs = db.Blogs
-        .Include(b => b.Posts)
-        .Where(b => b.Id == 1)
-        .ToList();
 
-    Console.WriteLine($"Es sind {blogs.Count} Blogs verfügbar");
-    foreach (var blog in blogs)
-    {
-        Console.WriteLine($"Blog: {blog.Name}, Url: {blog.Url}");
-        foreach (var post in blog.Posts)
-        {
-            Console.WriteLine($"  Post: {post.Title}, CreatedBy: {post.CreatedBy}");
-        }
-    }
-    
-    var blog1 = blogs.Single(b => b.Id == 1);
-    var post1 = blog1.Posts.Single(p => p.Id == 1);
-    post1.CreatedBy = "User1";
+    var firstPost = db.Posts
+        .Where(p => p.BlogId == 1 && p.Id == 1)
+        .FirstOrDefault();
+
+    firstPost.Title = "Geändert " + DateTime.UtcNow;
     db.SaveChanges();
 
-    Console.WriteLine($"Post1 wurde von {post1.CreatedBy} ersstellt");
+    var history = db.Posts.TemporalAll()
+    .Where(p => p.Id == 1 && p.BlogId == 1);
+
+    foreach (var post in history)
+    {
+        Console.WriteLine($"Post: {post.Title}");
+    }
+
 
     stopwatch.Stop();
 
