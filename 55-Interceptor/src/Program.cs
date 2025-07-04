@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 int sqlCount = 0;
 var options = new DbContextOptionsBuilder<AppDbContext>()
     .UseSqlite($"Data Source=blogsystemdb55.db")
+    //.AddInterceptors(new SetCreatedByInterceptor())
     //.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BlogSystemDb55;Trusted_Connection=True;")
     //.UseLazyLoadingProxies() // Aktiviert Lazy Loading
     .LogTo(log =>
@@ -25,12 +26,12 @@ var options = new DbContextOptionsBuilder<AppDbContext>()
     .Options
     ;
 using var db = new AppDbContext(options);
-//db.Database.EnsureDeleted();
+db.Database.EnsureDeleted();
 db.Database.EnsureCreated();
 
 
 // Seed initial ausführen, falls leer
-//DbSeeder.Seed(db);
+DbSeeder.Seed(db);
 #endregion
 
 Console.WriteLine("BlogSystem Console Demo gestartet.");
@@ -42,22 +43,28 @@ while (true)
 
     var stopwatch = Stopwatch.StartNew();
     var blogs = db.Blogs
-        //.IgnoreQueryFilters()
+
+        .Include(b => b.Posts)
+        .Where(b => b.Id == 1)
         .ToList();
 
-    Console.WriteLine($"Es sind {blogs.Count} verfügbar");
-
-    /*
+    Console.WriteLine($"Es sind {blogs.Count} Blogs verfügbar");
+    foreach (var blog in blogs)
+    {
+        Console.WriteLine($"Blog: {blog.Name}, Url: {blog.Url}");
+        foreach (var post in blog.Posts)
+        {
+            Console.WriteLine($"  Post: {post.Title}, CreatedBy: {post.CreatedBy}");
+        }
+    }
+    
     var blog1 = blogs.Single(b => b.Id == 1);
-    blog1.IsDeleted = true;
-
+    var post1 = blog1.Posts.Single(p => p.Id == 1);
+    post1.CreatedBy = "User1";
     db.SaveChanges();
 
-    blogs = db.Blogs
-        .ToList();
+    Console.WriteLine($"Post1 wurde von {post1.CreatedBy} ersstellt");
 
-    Console.WriteLine($"Es sind {blogs.Count} verfügbar");
-*/
     stopwatch.Stop();
 
 #region output
